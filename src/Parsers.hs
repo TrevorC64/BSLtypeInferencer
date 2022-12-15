@@ -286,12 +286,13 @@ infExp (Var _)           = "Symbol"
 infExp (Number _)        = "Number"
 infExp (String _)        = "String"
 infExp (Bool _)          = "Boolean"
-infExp (UniOp func _)    | elem func ["abs", "add1", "sub1", "string->number"] = "Number"
+infExp (UniOp func _)    | elem func ["abs", "add1", "sub1", "string->number", "string-length", "sin", "cos"] = "Number"
                          | '?' == head (reverse func) = "Boolean"        -- making the assumption that all uninary functions WT {* -> Boolean} end with ?
 infExp (BinOp func _ _)  | elem func ["+", "-", "*", "/", "%", "expt"] = "Number"
-                         | elem func ["and", "or", "<", "<=", ">", ">=", "equal?"] = "Boolean"
+                         | elem func ["and", "or", "<", "<=", ">", ">=", "equal?", "string=?", "string>?", "string<?"] = "Boolean"
 infExp (Cond (c:cs))     = infExp $ snd c
 infExp (Cons a d)        = "ListOf" ++ infExp a -- does not inforce all elements are same type
+infExp (Lamb x b)        = "X -> " ++ infExp b 
 infExp Empty             = "ListOfa"
 
 infSExpr :: SExpr -> String
@@ -330,9 +331,16 @@ parseFile :: Parser [SExpr]
 parseFile = do
     manyTill parseSExpr eof
 
-main :: Int -> IO ()
-main  n  = do{ result <- parseFromFile parseFile $ "tests/test"++(show n)++".txt"
+mainInterp :: Int -> IO ()
+mainInterp  n  = do{ result <- parseFromFile parseFile $ "tests/test"++(show n)++".txt"
              ; case result of
                  Left err  -> print err
                  Right xs  -> print xs
+             }
+
+mainInfer :: Int -> IO ()
+mainInfer  n  = do{ result <- parseFromFile parseFile $ "tests/test"++(show n)++".txt"
+             ; case result of
+                 Left err  -> print err
+                 Right xs  -> print $ infSExpr $ last xs
              }
