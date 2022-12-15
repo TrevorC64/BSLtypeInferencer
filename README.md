@@ -66,20 +66,31 @@ This is a program that will parse, and interpret [Beginning Student Lanuage (BSL
    ```sh
    stack ghci Parsers.hs
    ```
-   or
-   ```sh
-   stack ghci ParsersGADTS.hs
-   ```
-3. To Infer: run the following, where ### is the number of the corresponding file you would like to test 
+3. To Infer from file: run the following, where ### is the number of the corresponding file you would like to test 
    ```sh
    mainInfer ###
    ```
-   To Interpret: run the following, where ### is the number of the corresponding file you would like to test 
+   To Interpret from file: run the following, where ### is the number of the corresponding file you would like to test 
    ```sh
    mainInterp ###
    ```
+4. To Infer a string expression:
+    ```sh
+   infer "(+ 2 3)"
+   ```
+   To Interpret a string expression:
+   ```sh
+   interp "(+ 2 3)"
+   ```
 
 ## Limitations
+1. Non-GADT inferencer is very limited, in terms of the Unary and Binary operations it can reason about, they are limited to the operations in the lists `unaryNum`, `binNum`, and `binBool` defined above the inferencer.
+ * Inferencing  `cons` and `cond` does not inforce all elements are the same type, but assumes they are
+2. GADT implementation is not fully complete.
+ * Issues inforcing existential types in expressions such as `let`, `cons`, and `cond`.
+ * For those reasons the inferencer does not work and the interpreter only works for limited expressions
+3. A unique feature of BSL is user defined structures, which are absent from this implementation.
+ 
 
 
 
