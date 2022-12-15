@@ -281,15 +281,19 @@ parseExp = do try parseCons
 --------------------------------------------------------
 -- ### INFERENCER ###
 --------------------------------------------------------
+unaryNum = ["abs", "add1", "sub1", "string->number", "string-length", "sin", "cos"] 
+binNum = ["+", "-", "*", "/", "%", "expt"]
+binBool =  ["and", "or", "<", "<=", ">", ">=", "equal?", "string=?", "string>?", "string<?"]
+
 infExp :: Expr -> String
 infExp (Var _)           = "Symbol"
 infExp (Number _)        = "Number"
 infExp (String _)        = "String"
 infExp (Bool _)          = "Boolean"
-infExp (UniOp func _)    | elem func ["abs", "add1", "sub1", "string->number", "string-length", "sin", "cos"] = "Number"
-                         | '?' == head (reverse func) = "Boolean"        -- making the assumption that all uninary functions WT {* -> Boolean} end with ?
-infExp (BinOp func _ _)  | elem func ["+", "-", "*", "/", "%", "expt"] = "Number"
-                         | elem func ["and", "or", "<", "<=", ">", ">=", "equal?", "string=?", "string>?", "string<?"] = "Boolean"
+infExp (UniOp func _)    | elem func unaryNum = "Number"
+                         | '?' == head (reverse func) = "Boolean" -- making the assumption that all unary functions WT {* -> Boolean} end with ?
+infExp (BinOp func _ _)  | elem func binNum = "Number"
+                         | elem func binBool = "Boolean"
 infExp (Cond (c:cs))     = infExp $ snd c
 infExp (Cons a d)        = "ListOf" ++ infExp a -- does not inforce all elements are same type
 infExp (Lamb x b)        = "X -> " ++ infExp b 
