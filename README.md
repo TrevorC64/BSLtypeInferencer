@@ -1,4 +1,4 @@
-# BSLtypeInferencer
+# BSL Type Inferencer
 
 ## About The Project
 
