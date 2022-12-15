@@ -1,0 +1,5 @@
+64
+#t
+"Hello"
+(cons 2 empty)
+(cons 2 (cons 3 (cons 4 empty)))

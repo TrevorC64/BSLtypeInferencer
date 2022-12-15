@@ -1,0 +1,7 @@
+; A Color is a String
+
+; fact : Nat -> Nat
+(define (fact n)
+    (cond
+        [(zero? n) 1]
+        [else (* n (fib (- n 1)))]))

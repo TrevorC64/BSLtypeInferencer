@@ -1,0 +1,6 @@
+(lambda (x)
+    (cond 
+        [(> 10 x) "Small"]
+        [(> 5 x) "Smaller"]
+        [(> 1 x) "Smallest"]
+        [else "Not Small"]))
