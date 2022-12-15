@@ -85,10 +85,10 @@ This is a program that will parse, and interpret [Beginning Student Lanuage (BSL
 
 ## Limitations
 1. Non-GADT inferencer is very limited, in terms of the Unary and Binary operations it can reason about, they are limited to the operations in the lists `unaryNum`, `binNum`, and `binBool` defined above the inferencer.
- * Inferencing  `cons` and `cond` does not inforce all elements are the same type, but assumes they are
+   * Inferencing  `cons` and `cond` does not inforce all elements are the same type, but assumes they are
 2. GADT implementation is not fully complete.
- * Issues inforcing existential types in expressions such as `let`, `cons`, and `cond`.
- * For those reasons the inferencer does not work and the interpreter only works for limited expressions
+   * Issues inforcing existential types in expressions such as `let`, `cons`, and `cond`.
+   * For those reasons the inferencer does not work and the interpreter only works for limited expressions
 3. A unique feature of BSL is user defined structures, which are absent from this implementation.
  
 
